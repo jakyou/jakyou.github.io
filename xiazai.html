@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>应用下载</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<!-- 以下为openinstall集成代码，建议在html文档中尽量靠前放置，加快初始化过程 -->
+<!-- 强烈建议直接引用下面的cdn加速链接，以得到最及时的更新，我们将持续跟踪各种主流浏览器的变化，提供最好的服务；不推荐将此js文件下载到自己的服务器-->
+<script type="text/javascript" charset="utf-8" src="https://web.cdn.openinstall.io/openinstall.js"></script>
+<script type="text/javascript">
+  	//OpenInstall初始化时将与openinstall服务器交互，应尽可能早的调用
+	/*web页面向app传递的json数据(json string/js Object)，应用被拉起或是首次安装时，通过相应的android/ios api可以获取此数据*/
+	var data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
+	new OpenInstall({
+		/*appKey必选参数，平台为每个应用分配的ID*/
+		appKey : "cl7vmg",
+		/*自定义遮罩的html*/
+    mask:function(){
+     return "<div id='_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"
+    },
+    /*初始化完成的回调函数，可选*/
+		onready : function() {
+			/*在app已安装的情况尝试拉起app*/
+			this.schemeWakeup();
+			
+			/*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
+			var m = this, button = document.getElementById("downloadButton");
+			button.onclick = function() {
+				m.wakeupOrInstall();
+				return false;
+			}
+		}
+	}, data);
+
+</script>
+
+<link rel="stylesheet" href='https://web.cdn.openinstall.io/api_res/css/main.css' />
+<style type="text/css">
+*{
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+</style>
+</head>
+<body>
+<div class="content channel-page">
+  <div class="page-index">
+  	<div class="udid-content channel-content jsContent" style="width: 90%">
+  	<img alt="产品功能" src='https://web.cdn.openinstall.io/api_res/images/product.png' style="max-width:100%"/>
+    </div>
+    <div class="app-num">
+        <p style="text-align: center;font-size: 2em;color: #464C5B">应用名：情话猫</p>
+    </div>
+    <div class="appExm">
+</div>
+
+<div class="content-block" style="text-align: center">
+  <p style="text-align: center">
+  	<a id="downloadButton" href="javascript:;" class="button button-big udid-bt channel-bt">App Store下载</a>
+  </p>
+  <!--二维码显示样式-->
+  <div style="text-align: center;background: #fff;display: inline-block;padding: 10px;min-width:150px;min-height:150px" class="qr_link">
+    <img src="qr.png" alt="二维码" style="border: 1px solid #e5e5e5;padding: 5px;"/>
+  </div>
+  <p style="color: #464C5B;text-align: center;margin: 10px auto 30px;" class="qr_link">请使用手机扫码下载</p>
+  <p style="text-align:center;color:red">系统默认测试页仅限开发测试，单日访问ip限定10个</p>
+</div>
+
+  </div>
+</div>
+
+</body>
+</html>
